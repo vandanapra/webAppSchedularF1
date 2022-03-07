@@ -32,7 +32,7 @@ def placeOrder (request):
     return render(request, "place_order.html",{'orders':orders})
 
 def generateSchedule (request):
-    todaysOrder = productionOrder.objects.filter(currentDate = datetime.today()).order_by("id")
+    todaysOrder = productionOrder.objects.filter(currentDate = datetime.today()).order_by("sno")
     main.main(request,todaysOrder)
     return render(request, "machine_loading.html")
     
