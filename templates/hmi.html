@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block title %}HMI{% endblock title %}
+{% block body %}
+  
+    <div class="container px-4 pt-4">
+        <h1 class="text-center">HMI ID No.-00001</h1>
+        <form class="row g-3" method="post" action="/hmi">{{csrf_input}}
+          {% comment %} {% csrf_token %}   {% endcomment %}
+            <div class="col-6">
+                <label for="operatorname" class="form-label">Operator Name</label>
+                <input type="text" class="form-control" id="operatorname" placeholder="Enter Your name" name="operatorname">
+            </div>
+            <div class="col-6">
+                <label for="identity" class="form-label">Operator ID No.</label>
+                <input type="text" class="form-control" id="identity" placeholder="Please enter your ID No" name="identity">
+            </div>
+            <div class="col-6">
+                <label for="machine" class="form-label">Machine Name</label>
+                <select class="form-select" aria-label="Default select example" name="machine">
+                    <option selected>Select Machine</option>
+                    <option value="SW0110">SW0110</option>
+                    <option value="SW0120">SW0120</option>
+                    <option value="SW0130 ">SW0130</option>
+                    <option value="SW0140">SW0140</option>
+                    <option value="SW0150">SW0150</option>
+                    <option value="SW0160">SW0160</option>
+                    <option value="EW0110">EW0110</option>
+                    <option value="EW0120">EW0120</option>
+                    <option value="EW0130">EW0130</option>
+                    <option value="RF0110">RF0110</option>
+                    <option value="RF0120">RF0120</option>
+                    <option value="RF0130">RF0130</option>
+                    <option value="RF0140">RF0140</option>
+                    <option value="UF0110">UF0110</option>
+                    <option value="UF0210">UF0210</option>
+                    <option value="UF0220">UF0220</option>
+                    <option value="UF0310">UF0310</option>
+                    <option value="UF0320">UF0320</option>
+                    <option value="UF0400">UF0400</option>
+                    <option value="UF0500">UF0500</option>
+                    <option value="UF0610">UF0610</option>
+                    <option value="UF0620">UF0620</option>
+                    <option value="UF0170">UF0700</option>
+                    <option value="UF0810">UF0810</option>
+                    <option value="UF0820">UF0820</option>
+                    <option value="UF0900">UF0900</option>
+                    <option value="SH0110">SH0110</option>
+                    <option value="SH0120">SH0120</option>
+                    <option value="SH0130">SH0130</option>
+                    <option value="SH0140">SH0140</option>
+                    <option value="SH0150">SH0150</option>
+                    <option value="SH0160">SH0160</option>
+                    <option value="SH0170">SH0170</option>
+                    <option value="SH0180">SH0180</option>
+                    <option value="SH0190">SH0190</option>
+                    <option value="SH0200">SH0200</option>
+                </select>
+            </div>
+            
+            <div class="col-6">
+                <label for="variant" class="form-label">Variant</label>
+                <select class="form-select" aria-label="Default select example" name="variant">
+                    <option selected>Select Variant</option>
+                    <option value="LWSCZAC">LWSCZAC (2nd Class AC Chair Car)</option>
+                    <option value="LWFCZAC">LWFCZAC (Executive Class AC Chair Car</option>
+                    <option value="LWACCN ">LWACCN (AC-3Tier)</option>
+                    <option value="HUMSAFAR">HUMSAFAR (AC-3Tier)</option>
+                    <option value="LWACCW">LWACCW (AC-2 Tier)</option>
+                    <option value="LWSCN">LWSCN (Non-AC Sleeper)</option>
+                    <option value="LS">LS (GS/EOG 100 SEATER)</option>
+                    <option value="LWSDD">LWSDD (Deendayalu)</option>
+                    <option value="LWS">LWS (Antyodaya Coach)</option>
+                    <option value="LWLRRM ">LWLRRM (450KVA Power Car)</option>
+                    <option value="LWLRRM">LWLRRM (750KVA Power Car)</option>
+                    <option value="LDSLR">LDSLR (Under Slung Luggage Cum brake Van)</option>
+                    <option value="LSLRD">LSLRD with DA set (Luggage Cum brake van)</option>
+                    <option value="LWCBAC">LWCBAC (AC Buffet Car)</option>
+                    <option value="LWSCZ">LWSCZ (2nd Class Non-AC Chair Car</option>
+                    <option value="TRC">TRC (AC Track recording Car)</option>
+                    <option value="TRSC">TRSC (AC track recording staff Car)</option>
+                    <option value="LWFAC">LWFAC (AC 1st Class)</option>
+                    <option value="LFCWAC">LFCWAC Composite (FAC+AC2T)</option>
+                    <option value="LVPH ">LVPH (LHB Parcel Van)</option>
+                    <option value="LWACCNE">LWACCNE (Gareeb Rath AC Sleeper Coach)</option>
+                    <option value="LWS-AC">LWS-AC (AC- General)</option>
+                </select>
+            </div> 
+            <div class="col-6">
+                <label for="partname" class="form-label">Part Name</label>
+                <input type="text" class="form-control" id="partname" placeholder="Please enter Part name" name="partname">
+            </div>
+            <div class="col-6">
+                <label for="partno" class="form-label">Part No.</label>
+                <input type="text" class="form-control" id="partno" placeholder="Please Enter Part Serial Number" name="partno">
+            </div>
+            <div class="col-md-6">
+                <label for="timein" class="form-label">Time In</label>
+                <div class='input-group date' id='timein'>
+                    <input type='datetime-local' class="form-control" name="timein" />
+                    <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="timeout" class="form-label">Time Out</label>
+                <div class='input-group date' id='timeout'>
+                    <input type='datetime-local' class="form-control" name="timeout" />
+                    <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#timein').datetimepicker();
+                        $('#timeout').datetimepicker({
+                    useCurrent: false //Important! See issue #1075
+                    });
+                        $("#timein").on("dp.change", function (e) {
+                            $('#timeout').data("DateTimePicker").minDate(e.date);
+                        });
+                        $("timeout").on("dp.change", function (e) {
+                            $('timein').data("DateTimePicker").maxDate(e.date);
+                        });
+                    });
+                 </script>
+            </div>
+            <div class=" container col-12">
+            <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    <div>
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    
+{% endblock body %}
+

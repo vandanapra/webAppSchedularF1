@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Place_Order{% endblock title %}
 {% block body %}
-<div class="container my-3">
-    <form class="row g-3"  method="post" action="/place_order">
-        {% csrf_token %}
-        <div class="col-md-6">
-            <label for="OR_no." class="form-label">Order Reference No.</label>
+<div class="container pt-5">
+    <form class="row g-3 pt-5"  method="post" action="/place_order" >{{csrf_input}}
+        <!-- {% csrf_token %} -->
+        <script>
+            const csrftoken=document.queryselector('[name=csrfmiddlewaretoken]').value;
+        </script>
+        <div class="col-md-6 ">
+            <label for="OR_no." class="form-label pt-20">Order Reference No.</label>
             <input type="text" class="form-control" id="OR_no." name="OR_no" placeholder="Order Reference No">
         </div>
         <div class="col-md-6">
@@ -64,6 +67,7 @@
         </div>
     </form>
     <form class="row g-3"  action="/generate_schedule">
+        {% csrf_token %}
         <div class="col-4">
             <button type="submit" class="btn btn-primary">Generate Schedule</button>
         </div>

@@ -25,12 +25,15 @@ SECRET_KEY = 'django-insecure-bjvg*)d0tze@4m7judcy_xh@enk9ov^!jafi$jc4zth8zo500c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# ALLOWED_HOSTS = ["29fb-202-3-77-168.ngrok.io","127.0.0.1"]
 ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'HMI.apps.HmiConfig',
+    'inventory.apps.InventoryConfig',
     'productionSchedualar.apps.ProductionschedualarConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,9 +45,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

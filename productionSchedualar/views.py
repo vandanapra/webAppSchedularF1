@@ -3,8 +3,11 @@ from datetime import date, datetime
 from productionSchedualar.models import productionOrder
 from django.contrib import messages
 from src import main
+from django.views.decorators.csrf import csrf_protect
+
 
 # Create your views here.
+@csrf_protect
 def index (request):
     context = {
         "variable":"vandana is great girl" }
@@ -27,7 +30,7 @@ def placeOrder (request):
         priority=request.POST.get('priority') 
         order=productionOrder(orderRefNo=OR_no,orderVariant=variant,orderStartDate=start_date,orderEndDate=end_date,orderQuantity=quantity,orderPriority=priority,currentDate=datetime.today())
         order.save()
-        messages.success(request, 'your message has been sent!')
+        messages.success(request, 'your Order has been sent!')
     orders = productionOrder.objects.all()
     return render(request, "place_order.html",{'orders':orders})
 
@@ -71,3 +74,11 @@ def updatedView(request,sno):
     order = productionOrder.objects.get(sno=sno)
     return render(request,"update.html",{'order':order})
 
+def mcDetails(request):
+    return render(request,"mc_details.html")
+
+def compDetails(request):
+    return render(request,"comp_details.html")
+
+def operationDetails(request):
+    return render(request,"operation_details.html")

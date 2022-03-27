@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.contrib import admin
 from django.urls import path
 from productionSchedualar import views
@@ -11,6 +12,9 @@ urlpatterns = [
     path('generate_schedule',views.generateSchedule, name='generate_schedule'),
     path('update/<int:sno>',views.update, name='update'),
     path('delete/<int:sno>',views.delete, name='delete'),
-    path('<id>',views.updatedView,name='updated_view'),
+    path('<int:sno>',views.updatedView,name='updated_view'),
+    path('machine_details',views.mcDetails,name='mc_details'),
+    path('comp_details',views.compDetails,name='comp_details'),
+    path('operation_details',views.operationDetails,name='oper_details')
 
 ]
