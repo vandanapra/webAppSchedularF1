@@ -25,5 +25,6 @@ def hmi(request):
         doc ={"operatorName":operatorname,"operatorIDNo":identity,"machineName":machine,"variantName":variant,"partName":partname,"partNumber":partno,"timeIN":timein,"timeOUT":timeout}
         jsonConvert = json.dumps(doc)
         createToAPI = requests.post(apiURL,data=jsonConvert)
-    messages.success(request, 'your message has been sent!')
-    return render(request,"hmi/hmi.html")
+        messages.success(request, 'your message has been sent!')
+    hmiAllDatas= Detail.objects.all()
+    return render(request,"hmi/hmi.html",{'hmiAllData':hmiAllDatas})
