@@ -12,6 +12,6 @@ class inhouseInventory(models.Model):
     dimension=models.CharField(max_length=122,default=0)
     drawingno=models.CharField(max_length=122,default=0)
     availableNos=models.CharField(max_length=122,default=0)
-    description=models.DateTimeField(null=True)
+    description=models.CharField(max_length=122,default=0)
     timein=models.DateTimeField(null=True)
     date=models.DateField()

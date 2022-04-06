@@ -22,4 +22,4 @@ def hmi(request):
         # print(python_list)
     messages.success(request, 'your message has been sent!')
 
-    return render(request,"hmi.html")
+    return render(request,"hmi/hmi.html")

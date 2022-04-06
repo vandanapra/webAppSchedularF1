@@ -4,8 +4,8 @@
   
     <div class="container px-4 pt-4">
         <h1 class="text-center">HMI ID No.-00001</h1>
-        <form class="row g-3" method="post" action="/hmi">{{csrf_input}}
-          {% comment %} {% csrf_token %}   {% endcomment %}
+        <form class="row g-3" method="post" action="/hmi">
+          {% csrf_token %}  
             <div class="col-6">
                 <label for="operatorname" class="form-label">Operator Name</label>
                 <input type="text" class="form-control" id="operatorname" placeholder="Enter Your name" name="operatorname">

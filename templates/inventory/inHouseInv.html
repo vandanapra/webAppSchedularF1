@@ -3,8 +3,8 @@
 {% block body %}    
 <div class="container px-4 pt-4">
     <h1 class="text-center pt-5">In-House Inventory Details</h1>
-    <form class="row g-3 pt-5" method="post" action="/inv">{{csrf_input}}
-        {% comment %} {% csrf_token %}   {% endcomment %}
+    <form class="row g-3 pt-5" method="post" action= "/inv">
+        {% csrf_token %}  
         <div class="col-6">
             <label for="productSno" class="form-label">Product SNo.</label>
             <input type="text" class="form-control" id="productSno" placeholder="Enter Your name" name="productSno">

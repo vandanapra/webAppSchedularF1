@@ -22,7 +22,7 @@ def inventory(request):
         # print(python_list)
         messages.success(request, 'your message has been sent!')
     inhouseInvs=inhouseInventory.objects.all()
-    return render(request,"inHouseInv.html",{'inhouseInvs':inhouseInvs})
+    return render(request,"inventory/inHouseInv.html",{'inhouseInvs':inhouseInvs})
 # Create your views here.
 def invUpdate(request,sno):
     if request.method=='POST':
@@ -49,7 +49,7 @@ def invUpdate(request,sno):
             # db.session.commit()
         return redirect("/invUpdate")
     inhouseInv=inhouseInventory.objects.get(sno=sno)
-    return render(request, "invupdate.html",{'inhouseInv':inhouseInv})
+    return render(request, "inventory/invupdate.html",{'inhouseInv':inhouseInv})
 
 
 
