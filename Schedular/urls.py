@@ -23,4 +23,5 @@ urlpatterns = [
     path('',include('productionSchedualar.urls')),
     path('hmi',include('HMI.urls')),
     path('inv',include('inventory.urls')),
+    path('machineDetails/',include('machineDetails.urls'))
 ]

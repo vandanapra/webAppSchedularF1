@@ -3,17 +3,13 @@
 {% block body %}
 
 <div class="container mt-5">
-    {% comment %} <button type ="button" class="btn btn-primary float-right">Add</button>  {% endcomment %}
-    {% comment %} <button class="btn btn-primary float-right mt-5 mr-2" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        Add
-    </button>     {% endcomment %}
     <p>
     <button class="btn btn-primary float-right mt-5 mr-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
         Add
     </button></p>
     <div class="collapse" id="collapseExample">
-        <form class="row g-3 pt-5"  method="post" action="/place_order" >{{csrf_input}}
-            <!-- {% csrf_token %} -->
+        <form class="row g-3 pt-5"  method="post" action="/place_order" >
+            {% csrf_token %}
             <script>
                 const csrftoken=document.queryselector('[name=csrfmiddlewaretoken]').value;
             </script>
@@ -53,8 +49,6 @@
             </div>
         </form>
     </div>
-{% comment %} </div>
-<div class="container mt-5"> {% endcomment %}
     <table class="table">
         <thead>
             <tr>
