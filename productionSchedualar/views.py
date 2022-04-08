@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponse,redirect
 from datetime import date, datetime
-from productionSchedualar.models import productionOrder
+from productionSchedualar.models import machineDetails, productionOrder
 from django.contrib import messages
 from src import main
 from django.views.decorators.csrf import csrf_protect
@@ -75,7 +75,19 @@ def updatedView(request,sno):
     return render(request,"update.html",{'order':order})
 
 def mcDetails(request):
-    return render(request,"mc_details.html")
+    if request.method =="POST":
+        machine_name=request.POST.get('machine_name')
+        Manufacturer=request.POST.get('Manufacturer')
+        shopName=request.POST.get('shopName')
+        MachineNo=request.POST.get('MachineNo') 
+        description=request.POST.get('description') 
+        remarks=request.POST.get('remarks') 
+        mcDetails=machineDetails(machine_name=machine_name,Manufacturer=Manufacturer,shopName=shopName,MachineNo=MachineNo,Description=description,remarks=remarks,currentDate=datetime.today())
+        mcDetails.save()
+        messages.success(request, 'your Order has been sent!')
+    details = machineDetails.objects.all()
+    return render(request, "mc_details.html",{'detail':details})
+   
 
 def compDetails(request):
     return render(request,"comp_details.html")

@@ -16,3 +16,12 @@ class productionOrder(models.Model):
     orderQuantity = models.CharField(max_length=122)
     orderPriority = models.CharField(max_length=122)
     currentDate = models.DateField()
+
+class machineDetails(models.Model):
+    machine_name=models.CharField(max_length=122)
+    Manufacturer=models.CharField(max_length=122)  
+    shopName=models.CharField(max_length=122)  
+    MachineNo=models.CharField(max_length=122)
+    Description=models.CharField(max_length=122,default=0)
+    remarks=models.CharField(max_length=122,default=0)
+    currentDate = models.DateField()
