@@ -25,3 +25,12 @@ class machineDetails(models.Model):
     Description=models.CharField(max_length=122,default=0)
     remarks=models.CharField(max_length=122,default=0)
     currentDate = models.DateField()
+
+class componentDetails(models.Model):
+    component_name=models.CharField(max_length=122)
+    DrawingNo=models.CharField(max_length=122)  
+    qpp=models.CharField(max_length=122)  
+    Level=models.CharField(max_length=122)
+    description=models.CharField(max_length=122,default=0)
+    modelName=models.CharField(max_length=122,default=0)
+    currentDate = models.DateField()

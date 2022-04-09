@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponse,redirect
 from datetime import date, datetime
-from productionSchedualar.models import machineDetails, productionOrder
+from productionSchedualar.models import machineDetails, productionOrder,componentDetails
 from django.contrib import messages
 from src import main
 from django.views.decorators.csrf import csrf_protect
@@ -90,7 +90,18 @@ def mcDetails(request):
    
 
 def compDetails(request):
-    return render(request,"comp_details.html")
+    if request.method =="POST":
+        component_name=request.POST.get('component_name')
+        DrawingNo=request.POST.get('DrawingNo')
+        qpp=request.POST.get('qpp')
+        Level=request.POST.get('Level') 
+        description=request.POST.get('description') 
+        modelName=request.POST.get('modelName') 
+        cpDetails=componentDetails(component_name=component_name,DrawingNo=DrawingNo,qpp=qpp,Level=Level,description=description,modelName=modelName,currentDate=datetime.today())
+        cpDetails.save()
+        messages.success(request, 'your Order has been sent!')
+    component_details = componentDetails.objects.all()
+    return render(request,"comp_details.html",{'cpdetail':component_details})
 
 def operationDetails(request):
     return render(request,"operation_details.html")
