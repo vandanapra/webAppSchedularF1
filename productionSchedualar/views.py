@@ -1,6 +1,9 @@
+from unicodedata import name
 from django.shortcuts import render,HttpResponse,redirect
 from datetime import date, datetime
-from productionSchedualar.models import machineDetails, productionOrder,componentDetails
+import json
+from matplotlib.font_manager import json_load
+from productionSchedualar.models import machineDetails, productionOrder,componentDetails,operationsDetails
 from django.contrib import messages
 from src import main
 from django.views.decorators.csrf import csrf_protect
@@ -86,6 +89,7 @@ def mcDetails(request):
         mcDetails.save()
         messages.success(request, 'your Order has been sent!')
     details = machineDetails.objects.all()
+    readAllDB(request)
     return render(request, "mc_details.html",{'detail':details})
    
 
@@ -104,4 +108,28 @@ def compDetails(request):
     return render(request,"comp_details.html",{'cpdetail':component_details})
 
 def operationDetails(request):
-    return render(request,"operation_details.html")
+    operDetail = operationsDetails.objects.all()
+    return render(request,"operation_details.html",{'operDetail':operDetail})
+
+def readOperationJsonSaveToDB(request):
+    jsonfileOperat = './static/json/operation.json'
+    json_data_file = open(jsonfileOperat)
+    json_load_file = json.load(json_data_file)
+
+    with open(jsonfileOperat,'r') as opera:
+        parsed_json_file = json.load(opera)
+    
+    for names in parsed_json_file.keys():
+        operationName = parsed_json_file[names]['name']
+        inputComponentsName = parsed_json_file[names]['inputs']
+        outputComponentsName = parsed_json_file[names]['outputs']
+        operationMachineName = parsed_json_file[names]['machine']
+        operationTime = parsed_json_file[names]['time']
+        operationDBData = operationsDetails(operationName = operationName, inputComponentsName = inputComponentsName,outputComponentsName = outputComponentsName,operationMachineName= operationMachineName,operationTime= operationTime)
+        operationDBData.save()
+    
+
+def readAllDB(request):
+    # readOperationJsonSaveToDB(request)
+    operDetail = operationsDetails.objects.all()
+    

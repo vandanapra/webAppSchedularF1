@@ -34,3 +34,11 @@ class componentDetails(models.Model):
     description=models.CharField(max_length=122,default=0)
     modelName=models.CharField(max_length=122,default=0)
     currentDate = models.DateField()
+
+#operation detail models
+class operationsDetails(models.Model):
+    operationName = models.CharField(max_length=300)
+    inputComponentsName = models.CharField(max_length=300)
+    outputComponentsName = models.CharField(max_length=300)
+    operationMachineName = models.CharField(max_length=300)
+    operationTime = models.CharField(max_length=300)
