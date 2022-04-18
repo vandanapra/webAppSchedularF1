@@ -91,7 +91,10 @@ def mcDetails(request):
     details = machineDetails.objects.all()
     readAllDB(request)
     return render(request, "mc_details.html",{'detail':details})
-   
+def delete_mc(request,id):
+    mcDetails = machineDetails.objects.get(id=id)
+    mcDetails.delete()
+    return redirect("/machine_details")   
 
 def compDetails(request):
     if request.method =="POST":
