@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Machine Details{% endblock title %}
 {% block body %}
-
-<div class="container mt-5">
+<div class="container pt-4 mt-5"><br>
+    <h1 class="text-3xl text-center leading-8 font-bold tracking-tight text-green-700 ">Machines Details</h1>
+</div>
+<div class="container pt-1">
     <p>
-    <button class="btn btn-primary float-right mt-5 mr-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    <button class="btn btn-primary float-right mr" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
         Add
-    </button></p>
+    </button></p><br>
     <div class="collapse" id="collapseExample">
         <form class="row g-3 pt-5"  method="post" action="/machine_details" >
             {% csrf_token %}
@@ -47,7 +49,8 @@
             </div>
         </form>
     </div>
-    <table class="table">
+    <table class="table table-striped table-hover table-bordered caption-top">
+        <caption>List of Machines</caption>
         <thead>
             <tr>
                 <th scope="col">S No.</th>

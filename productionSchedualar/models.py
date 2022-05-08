@@ -31,6 +31,8 @@ class componentDetails(models.Model):
     DrawingNo=models.CharField(max_length=122)  
     qpp=models.CharField(max_length=122)  
     Level=models.CharField(max_length=122)
+    predecessor=models.CharField(max_length=200,null=True)
+    successor=models.CharField(max_length=200,null=True)
     description=models.CharField(max_length=122,default=0)
     modelName=models.CharField(max_length=122,default=0)
     currentDate = models.DateField()

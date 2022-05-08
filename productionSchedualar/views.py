@@ -91,6 +91,7 @@ def mcDetails(request):
     details = machineDetails.objects.all()
     readAllDB(request)
     return render(request, "mc_details.html",{'detail':details})
+
 def delete_mc(request,id):
     mcDetails = machineDetails.objects.get(id=id)
     mcDetails.delete()
@@ -102,13 +103,20 @@ def compDetails(request):
         DrawingNo=request.POST.get('DrawingNo')
         qpp=request.POST.get('qpp')
         Level=request.POST.get('Level') 
+        predecessor=request.POST.get('predecessor') 
+        successor=request.POST.get('successor') 
         description=request.POST.get('description') 
         modelName=request.POST.get('modelName') 
-        cpDetails=componentDetails(component_name=component_name,DrawingNo=DrawingNo,qpp=qpp,Level=Level,description=description,modelName=modelName,currentDate=datetime.today())
+        cpDetails=componentDetails(component_name=component_name,DrawingNo=DrawingNo,qpp=qpp,Level=Level,predecessor = predecessor,successor=successor,description=description,modelName=modelName,currentDate=datetime.today())
         cpDetails.save()
-        messages.success(request, 'your Order has been sent!')
+        # messages.success(request, 'your Order has been sent!')
     component_details = componentDetails.objects.all()
     return render(request,"comp_details.html",{'cpdetail':component_details})
+
+def deleteComponentsfromTable(request,id):
+    getComponentDataFromDB = componentDetails.objects.get(id=id)
+    getComponentDataFromDB.delete()
+    return redirect("/comp_details")
 
 def operationDetails(request):
     operDetail = operationsDetails.objects.all()

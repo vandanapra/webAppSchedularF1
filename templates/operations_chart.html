@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}Gantt Chart{% endblock title %}
 {% block body %}
+<div class="container pt-4 mt-5"><br>
+    <h1 class="text-3xl text-center leading-8 font-bold tracking-tight text-green-700 ">Gantt Chart</h1>
+</div>
  <div class="pt-4">
     {% autoescape off %}
         {% include 'operations_chart_fig.html' %}

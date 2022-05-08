@@ -16,6 +16,6 @@ urlpatterns = [
     path('machine_details',views.mcDetails,name='mc_details'),
     path('comp_details',views.compDetails,name='comp_details'),
     path('operation_details',views.operationDetails,name='oper_details'),
-    path('delete_mc/<int:id>',views.delete_mc,name='delete_mc')
-
+    path('delete_mc/<int:id>',views.delete_mc,name='delete_mc'),
+    path('delete_comp/<int:id>',views.deleteComponentsfromTable,name ="delete_comp")
 ]

@@ -28,7 +28,7 @@ def inventory(request):
         createToAPI = requests.post(apiURL,data=jsonConvert)
         messages.success(request, 'your message has been sent!')
     inhouseInvs=inhouseInventory.objects.all()
-    return render(request,"inventory/inHouseInv.html",{'inhouseInvs':inhouseInvs})
+    return render(request,"inventory/inHouseInventory.html",{'inhouseInvs':inhouseInvs})
 
 # Create your views here.
 def invUpdate(request,sno):
