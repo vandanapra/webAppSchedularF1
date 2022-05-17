@@ -17,5 +17,6 @@ urlpatterns = [
     path('comp_details',views.compDetails,name='comp_details'),
     path('operation_details',views.operationDetails,name='oper_details'),
     path('delete_mc/<int:id>',views.delete_mc,name='delete_mc'),
-    path('delete_comp/<int:id>',views.deleteComponentsfromTable,name ="delete_comp")
+    path('delete_comp/<int:id>',views.deleteComponentsfromTable,name ="delete_comp"),
+    path('getComponentsDetails/<str:modelName>',views.readModelWiseComponentData,name ="getComponentsDetails"),
 ]

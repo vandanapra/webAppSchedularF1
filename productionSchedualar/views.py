@@ -8,7 +8,6 @@ from django.contrib import messages
 from src import main
 from django.views.decorators.csrf import csrf_protect
 
-
 # Create your views here.
 @csrf_protect
 def index (request):
@@ -21,6 +20,7 @@ def operationsChart (request):
     return render(request, "operations_chart.html")
 
 def machineLoading (request):
+    getOrders(request=request)
     return render(request, "machine_loading.html")
     
 def placeOrder (request):
@@ -144,3 +144,37 @@ def readAllDB(request):
     # readOperationJsonSaveToDB(request)
     operDetail = operationsDetails.objects.all()
     
+
+def readModelWiseComponentData(request,modelName):
+    getDataFromComponentDatabase = componentDetails.objects.all().filter(modelName=modelName)
+    return render(request,"getComponentsDetails.html",{'getComponentsDetails':getDataFromComponentDatabase})
+
+def getOrders(request):
+    orders = productionOrder.objects.all().filter(currentDate = datetime.today())
+    getComponentsForSpecificOrder(request,orders=orders)
+
+def getComponentsForSpecificOrder(request,orders):
+    components = []
+    for order in orders:
+        for variant in order.orderVariant:
+            componentsData = componentDetails.objects.all().filter(modelName = variant)
+            components.append(componentsData)
+    
+def getMachineDetails(request):
+    machinesInFactory = machineDetails.objects.all()
+
+def getOperationsDetails(request):
+    operationsDetailsOnEveryMachine = operationsDetails.objects.all()
+
+#get orders data here
+# class FactoryEnvironment(object):
+#     def __init__(self):
+#         self.orders = []
+#         self.components = []
+
+#     def getOrders(self):
+#         self.orders = productionOrder.objects.all()
+#         print(self.orders.orderVariant)
+
+#     def getComponentsForSpecificOrder(self):
+#         self.components = componentDetails.objects.all().filter(modelname = self.orders.orderVariant)
