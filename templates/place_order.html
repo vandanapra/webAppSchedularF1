@@ -72,12 +72,7 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
-        <form class="row g-3"  action="/generate_schedule">
-            {% csrf_token %}
-            <div class="grid grid-cols-1 gap-4 place-items-center">
-                <button type="submit" class="btn btn-primary">Generate Schedule</button>
-            </div>
-        </form>
+       
     </div>
     <table class="table caption-top table-striped table-hover table-bordered ">
         <caption>List of Orders</caption>
@@ -113,5 +108,13 @@
             {% endif %}
         </tbody>
     </table>
+    <div class=" grid-column-1">
+        <form class="row g-3"  action="/generate_schedule">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 gap-4 place-items-center">
+                <button type="submit" class="btn btn-primary">Generate Schedule</button>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock body %}
