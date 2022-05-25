@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}Place_Order{% endblock title %}
 {% block body %}
-<div class="container pt-4 mt-5"><br>
+<div class="container mt-5"><br>
     <h1 class="text-3xl text-center leading-8 font-bold tracking-tight text-green-700 ">Job Scheduling</h1>
 </div>
 <div class="container pt-1">
     <p>
     <button class="btn btn-primary float-right mr" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Add Orders</button></p><br>
-    <div class="collapse shadow-lg p-3 mb-5 bg-body rounded" id="collapseExample">
+    <div class="collapse shadow-lg p-3 mb-2 bg-body rounded" id="collapseExample">
         <form class="row"  method="post" action="/place_order" >
             {% csrf_token %} 
             {% comment %} <script>
@@ -108,13 +108,11 @@
             {% endif %}
         </tbody>
     </table>
-    <div class=" grid-column-1">
-        <form class="row g-3"  action="/generate_schedule">
-            {% csrf_token %}
-            <div class="grid grid-cols-1 gap-4 place-items-center">
-                <button type="submit" class="btn btn-primary">Generate Schedule</button>
-            </div>
-        </form>
-    </div>
+    <form class="row g-3"  action="/generate_schedule">
+        <div class="grid grid-cols-1 gap-4 place-items-center">
+            <button type="submit" class="btn btn-primary" style="text-align:center;font-size:20px">Generate Schedule</button>
+        </div>
+    </form>
+   
 </div>
 {% endblock body %}
