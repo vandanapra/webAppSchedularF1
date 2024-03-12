@@ -32,13 +32,12 @@ def main(request,orders):
 	logger.info("Creating orders for different Coach Variants")
 	if len(orders) > 0:
 		for order in orders:
-			agent.create_order(order.orderVariant,int(order.orderQuantity),int(order.orderPriority),str(order.orderStartDate))
+			agent.create_order(order.orderId,order.orderVariant,int(order.orderQuantity),int(order.orderPriority),str(order.orderStartDate))
 	
 	logger.info("Executing the Main Scheduler Algorithm")
 	agent.execute()
 	
 	logger.info("Main Scheduler Algorithm Execution Complete")
-	print(agent.completed_orders)
 	
 	logger.info("Generating Schedule Outputs")
 	os.makedirs(_outputs_path, exist_ok=True)

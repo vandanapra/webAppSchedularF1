@@ -26,7 +26,7 @@ class SimulatedMachine(object):
 
     """Start the operation on a Machine"""
     def start_operation(self, operation, components, agent):
-        if self.status == "READY":
+        if self.status.startswith('running'):
             print("*******************************************************")
             print("*****************Something went wrong.*****************")
             print("*******************************************************")
@@ -49,7 +49,7 @@ class SimulatedMachine(object):
             yield agent.env.timeout(done_in)
             # self.part_being_proc = None
             self.available = True
-            self.status = "READY"
+            self.status = "running-100ef"
             # print("Completed the process step of %s on machine %s at %s and output %s sent to
             # "next machine."%(operation["name"], self.name, env.now,operation["outputs"]))
             done_in = 0

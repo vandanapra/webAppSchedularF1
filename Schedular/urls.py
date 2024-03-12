@@ -16,11 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
-from inventory.views import inventory
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('productionSchedualar.urls')),
-    path('hmi',include('HMI.urls')),
-    path('inv',include('inventory.urls')),
+    path('inventory/',include('inventory.urls')),
+    path('machine/',include('machines.urls')),
+    path('input/',include('products.urls')),
 ]

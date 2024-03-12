@@ -2,6 +2,7 @@ import os
 import pandas
 import random
 import logging
+from machines.models import Machine
 logger = logging.getLogger("dataset")
 
 _inputs_path = os.path.abspath(os.path.join(
@@ -33,15 +34,31 @@ class InfrastructureDataSet(object):
                  "operation": row[4]}
             _machines.append(d)
         return _machines
+    
+    def _machines_reader_db(self):
+        logger.info("Loading Machine List from {}".format(Machine))
+        _machines_raw = Machine.objects.all()
+        _machines = []
+        for row in _machines_raw:
+            d = {"name": row.name,
+                 "line": row.line,
+                 "machine_no": row.machine_no,
+                 "status": row.status,
+                 "operation": row.operation}
+            _machines.append(d)
+            # logger.info("Machine List: {}".format(d))
+        return _machines
 
     _machine_list_readers = {
         'csv': _machines_reader_csv,
+        'db':_machines_reader_db,
     }
 
     @property
     def machine_list(self):
         if not self._machine_list:
             readfunc = self._machine_list_readers[self._machine_list_format]
+            logger.info("Machine List: {}".format(readfunc))
             self._machine_list = readfunc(self)
         return self._machine_list
 

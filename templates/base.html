@@ -30,7 +30,7 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" style="color:white"href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Inputs
+                Manufacturing
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
                 <li><a class="dropdown-item" href={% url 'mc_details' %}>Machines</a></li>
@@ -40,29 +40,20 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle hover-red" style="color:white"href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Job Scheduler
+                Sales
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href={% url 'place_order' %}>Place Order</a></li>
+                <li><a class="dropdown-item" href={% url 'place_order' %}>Sales Orders</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle hover-red" style="color:white"href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Planning
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href={% url 'machine_loading' %}>Machine chart</a></li>
                 <li><a class="dropdown-item" href={% url 'operations_chart' %}>Gantt Chart</a></li>  
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle"  href="/services" style="color:white"href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" data-bs-target="#navbarNavDarkDropdown" aria-expanded="false">
-                Services
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href={% url 'HMI' %}>HMI</a></li>
-                <li><a class="dropdown-item" href={% url 'inv' %}>Inventory</a></li>
-                <li><a class="dropdown-item" href="#">IoT</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" style="color:white"href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Analytics
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><hr class="dropdown-divider"></li>
                 <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Resource Utilization</a>
                     <ul class="submenu dropdown-menu">
                         <li><a class="dropdown-item" href="#">Machine Utilization</a></li>
@@ -71,6 +62,31 @@
                 </li>
                 <li><a class="dropdown-item" href="#">Market Accelerator</a></li>
                 <li><a class="dropdown-item" href="#">Production</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle"  href="/services" style="color:white"href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" data-bs-target="#navbarNavDarkDropdown" aria-expanded="false">
+                Inventory
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">HMI</a></li>
+                <li><a class="dropdown-item" href={% url 'inventory-view' %}>Inventory Planning</a></li>
+                <li><a class="dropdown-item" href="#">Inventory Detail</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Inventory Policies</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" style="color:white"href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Purchasing
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Purchase Orders</a></li>
+                <li><a class="dropdown-item" href="#">Purchase Order Summary</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Suppliers</a></li>
+                <li><a class="dropdown-item" href="#">Item Suppliers</a></li>
+                
               </ul>
             </li>
             <li class="nav-item">

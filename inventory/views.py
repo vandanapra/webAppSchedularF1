@@ -1,69 +1,58 @@
-from django.shortcuts import render,redirect
-from datetime import datetime
-from inventory.models import inhouseInventory
-from django.contrib import messages
-from django.views.decorators.csrf import csrf_protect
-import sys
-import requests
-import json
+from django.shortcuts import render
+from django.views.generic import ListView
+from django_tables2 import tables,SingleTableView
+from django_filters.views import FilterView
+from django_tables2.views import SingleTableMixin
+from django_filters import FilterSet,rest_framework
+from django_tables2.export.views import ExportMixin
+from rest_framework import generics, status, authentication, permissions
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
+from rest_framework import filters
+from .serializers import *
 
-apiURL = "http://172.29.96.106:8100/inhouseInventoryInfo/"
 
-@csrf_protect
-def inventory(request):
-    if request.method == "POST":
-        productSno=request.POST.get('productSno')
-        level=request.POST.get('level')
-        qpp=request.POST.get('qpp')
-        dimension=request.POST.get('dimension')
-        drawingno=request.POST.get('drawingno')
-        availableNos=request.POST.get('availableNos')
-        description=request.POST.get('description')
-        timein=request.POST.get('timein')
-        inhouseInv=inhouseInventory(productSno=productSno,level=level,qpp=qpp,dimension=dimension,drawingno=drawingno,availableNos=availableNos,description=description,timein=timein,date=datetime.today())
-        inhouseInv.save()
-        doc ={"ProductSNo":productSno,"Level":level,"DrawingNo":drawingno,"Description":description,"qpc":qpp,"length":dimension,"width":dimension,"thick":dimension,"InnerDia":dimension,"OuterDia":dimension,"quantityAvailable":availableNos}
-        # mycol.insert_one(doc)
-        jsonConvert = json.dumps(doc)
-        createToAPI = requests.post(apiURL,data=jsonConvert)
-        messages.success(request, 'your message has been sent!')
-    inhouseInvs=inhouseInventory.objects.all()
-    return render(request,"inventory/inHouseInventory.html",{'inhouseInvs':inhouseInvs})
+from .models import *
 
 # Create your views here.
-def invUpdate(request,sno):
-    if request.method=='POST':
-        productSno=request.POST.get('productSno')
-        level=request.POST.get('level')
-        qpp=request.POST.get('qpp')
-        dimension=request.POST.get('dimension') 
-        drawingno=request.POST.get('drawingno')
-        availableNos=request.POST.get('availableNos')
-        description=request.POST.get('description')
-        timein=request.POST.get('timein')
+# class InventoryFilter(FilterSet):
+#     class Meta:
+#         model = Inventory
+#         fields = {"product":["product__item_contains"]}
+    
 
-        inhouseInv = inhouseInventory.objects.get(sno=sno)
-        inhouseInv.productSno = productSno
-        inhouseInv.level = level
-        inhouseInv.qpp= qpp
-        inhouseInv.dimension =dimension
-        inhouseInv.drawingno =drawingno
-        inhouseInv.availableNos =availableNos
-        inhouseInv.description =description
-        inhouseInv.timein =timein
-        inhouseInv.save()
-            # db.session.add(todo)
-            # db.session.commit()
-        return redirect("/invUpdate")
-    inhouseInv=inhouseInventory.objects.get(sno=sno)
-    return render(request, "inventory/invupdate.html",{'inhouseInv':inhouseInv})
 
-def delete(request,sno):
-    inhouseInv = inhouseInventory.objects.get(sno=sno)
-    inhouseInv.delete()
-    return redirect("/inv")
+class InventoryTable(tables.Table):
+    class Meta:
+        model = Inventory
+        template_name = "django_tables2/bootstrap5-responsive.html"
+        fields = ('product','location','roq_minimum_quantity','roq_maximum_quantity','roq_minimum_period_of_cover','roq_maximum_period_of_cover','safety_stock_minimum_quantity','safety_stock_maximum_quantity','safety_stock_minimum_period_of_cover','safety_stock_maximum_period_of_cover','service_level','lead_time','lead_time_deviation','donot_stock','current_available','created_at','updated_at')
 
-def updatedView(request,sno):
-    inhouseInv = inhouseInventory.objects.get(sno=sno)
-    return render(request,"update.html",{'inhouseInv':inhouseInv})
+class InventoryListView(ExportMixin,SingleTableMixin, FilterView):
 
+    model = Inventory
+    table_class = InventoryTable
+    template_name = "inventory/inHouseInventory.html"
+    # filterset_class = InventoryFilter
+    export_formats = ('csv','json','xlsx')
+    paginate_by = 10
+
+
+class InventoryAPI(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,SessionAuthentication)
+    queryset = Inventory.objects.all()
+    serializer_class = InventorySerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['product__item','location__location']
+
+class InventoryUpdateAPI(generics.RetrieveUpdateAPIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,SessionAuthentication)
+    queryset = Inventory.objects.all()
+    serializer_class = InventorySerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['product__item','location__location']

@@ -4,6 +4,7 @@ import time
 from datetime import datetime
 from src.simulator.factory import SimulatedFactory
 from src.simulator.component import SimulatedComponent
+from order.models import productionOrder
 
 import logging
 logger = logging.getLogger("agent")
@@ -44,11 +45,12 @@ class SchedulingAgent(object):
     def factory(self):
         return self._factory
 
-    def create_order(self, order_variant, order_qty,
+    def create_order(self,order_id, order_variant, order_qty,
                      order_priority, order_start_date):
         self._orders.append(
             {order_variant:
-                {'qty': order_qty,
+                {'id':order_id,
+                 'qty': order_qty,
                  'priority': order_priority,
                  'start_date': order_start_date}
              }
@@ -95,6 +97,27 @@ class SchedulingAgent(object):
                                             "READY", 0, comp_tup[2],
                                             order[variant]["start_date"])
                                         self._factory.inventory.append(new_comp)
+        # from itertools import product
+
+        # for order, variant, i, line, comp_tup, temp, j in product(
+        #     self._orders,
+        #     (key for key in order.keys()),
+        #     range(order[variant]["qty"]),
+        #     (key for key in self._process_flow.keys()),
+        #     (comp_tup for comp_tup in self._process_flow[line] if str(comp_tup[2]).islower()),
+        #     (temp for temp in self._process_flow[line][comp_tup]),
+        #     range(temp["qpc"])
+        # ):
+        #     new_comp = SimulatedComponent(
+        #         comp_tup[0], variant,
+        #         order[variant]["priority"],
+        #         line, comp_tup[1],
+        #         self._process_flow[line][comp_tup][0]["route"][0],
+        #         "READY", 0, comp_tup[2],
+        #         order[variant]["start_date"]
+        #     )
+        #     self._factory.inventory.append(new_comp)
+
 
     @property
     def order_completed(self):
@@ -102,24 +125,37 @@ class SchedulingAgent(object):
             for variant in order.keys():
                 if order[variant]["qty"] != self.completed_orders[variant]:
                     return False
+                order = productionOrder.objects.get(orderId=order[variant]["id"],status='pending')
+                order.status = 'completed'
+                order.save()
         return True
 
     def step(self):
         if self.order_completed:
             raise OrderSimulationComplete()
 
+        # for line in self._factory.lines:
+        #     for machine in self._factory.machines:
+        #         if machine.line.lower() == line.lower() and machine.status == "READY":
+        #             for priority in range(1, 11):
+        #                 if machine.status == "READY":
+        #                     # logger.debug("EXEC STEP {}:{}".format(line, machine))
+        #                     input_components = self._operations[machine.operation]["inputs"]
+        #                     for variant in self._factory.variants:
+        #                         if machine.status == "READY":
+        #                             self.check_start_operation(
+        #                                 self._operations[machine.operation],
+        #                                 priority, machine, input_components, line, variant)
         for line in self._factory.lines:
-            for machine in self._factory.machines:
-                if machine.line.lower() == line.lower() and machine.status == "READY":
-                    for priority in range(1, 11):
-                        if machine.status == "READY":
-                            # logger.debug("EXEC STEP {}:{}".format(line, machine))
-                            input_components = self._operations[machine.operation]["inputs"]
-                            for variant in self._factory.variants:
-                                if machine.status == "READY":
-                                    self.check_start_operation(
-                                        self._operations[machine.operation],
-                                        priority, machine, input_components, line, variant)
+            for machine in [m for m in self._factory.machines if m.line.lower() == line.lower() and m.status.startswith('running')]:
+                for priority in range(1, 11):
+                    if machine.status.startswith('running'):
+                        input_components = self._operations[machine.operation]["inputs"]
+                        for variant in [v for v in self._factory.variants if machine.status.startswith('running')]:
+                            self.check_start_operation(
+                                self._operations[machine.operation],
+                                priority, machine, input_components, line, variant)
+
         self.env.step()
 
     def execute(self):

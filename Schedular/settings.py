@@ -26,13 +26,12 @@ SECRET_KEY = 'django-insecure-bjvg*)d0tze@4m7judcy_xh@enk9ov^!jafi$jc4zth8zo500c
 DEBUG = True
 
 # ALLOWED_HOSTS = ["29fb-202-3-77-168.ngrok.io","127.0.0.1"]
-ALLOWED_HOSTS = ['172.29.96.106','127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'HMI.apps.HmiConfig',
     'inventory.apps.InventoryConfig',
     'productionSchedualar.apps.ProductionschedualarConfig',
     'django.contrib.admin',
@@ -41,6 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'machines',
+    'operations',
+    'products',
+    'django_tables2',
+    "django_bootstrap5",
+    'order',
+    'treebeard',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +135,16 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [os.path.join(BASE_DIR / "static")]
+
+DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap5-responsive.html"
+DJANGO_TABLES2_TABLE_ATTRS = {
+    'class': 'table table-striped table-hover table-bordered caption-top',
+    'thead': {
+        'class': 'table-dark',
+    },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}

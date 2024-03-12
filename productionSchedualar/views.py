@@ -3,10 +3,13 @@ from django.shortcuts import render,HttpResponse,redirect
 from datetime import date, datetime
 import json
 from matplotlib.font_manager import json_load
-from productionSchedualar.models import machineDetails, productionOrder,componentDetails,operationsDetails
+from productionSchedualar.models import machineDetails,componentDetails,operationsDetails
 from django.contrib import messages
 from src import main
 from django.views.decorators.csrf import csrf_protect
+from machines.models import Machine
+from products.models import Product
+from order.models import productionOrder
 
 # Create your views here.
 @csrf_protect
@@ -31,14 +34,14 @@ def placeOrder (request):
         end_date=request.POST.get('end_date') 
         quantity=request.POST.get('quantity') 
         priority=request.POST.get('priority') 
-        order=productionOrder(orderRefNo=OR_no,orderVariant=variant,orderStartDate=start_date,orderEndDate=end_date,orderQuantity=quantity,orderPriority=priority,currentDate=datetime.today())
+        order=productionOrder(orderRefNo=OR_no,orderVariant=variant,orderStartDate=start_date,orderEndDate=end_date,orderQuantity=quantity,orderPriority=priority,status='pending')
         order.save()
         messages.success(request, 'your Order has been sent!')
     orders = productionOrder.objects.all()
     return render(request, "place_order.html",{'orders':orders})
 
 def generateSchedule (request):
-    todaysOrder = productionOrder.objects.filter(currentDate = datetime.today()).order_by("sno")
+    todaysOrder = productionOrder.objects.filter(status='pending').order_by("orderId")
     main.main(request,todaysOrder)
     return render(request, "machine_loading.html")
     
@@ -88,7 +91,7 @@ def mcDetails(request):
         mcDetails=machineDetails(machine_name=machine_name,Manufacturer=Manufacturer,shopName=shopName,MachineNo=MachineNo,Description=description,remarks=remarks,currentDate=datetime.today())
         mcDetails.save()
         messages.success(request, 'your Order has been sent!')
-    details = machineDetails.objects.all()
+    details = Machine.objects.all()
     readAllDB(request)
     return render(request, "mc_details.html",{'detail':details})
 
@@ -110,7 +113,7 @@ def compDetails(request):
         cpDetails=componentDetails(component_name=component_name,DrawingNo=DrawingNo,qpp=qpp,Level=Level,predecessor = predecessor,successor=successor,description=description,modelName=modelName,currentDate=datetime.today())
         cpDetails.save()
         # messages.success(request, 'your Order has been sent!')
-    component_details = componentDetails.objects.all()
+    component_details = Product.objects.all()
     return render(request,"comp_details.html",{'cpdetail':component_details})
 
 def deleteComponentsfromTable(request,id):
